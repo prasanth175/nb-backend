@@ -296,16 +296,16 @@ app.get('/products', authProfile, async (req, res) => {
 
 app.post('/sell/', authProfile, async (request, response) => {
   try {
+    console.log('hello')
     const name = request.username
-    const {sellDetails} = request.body
-    const otherData = JSON.parse(request.body.sellDetails)
+    console.log(request.body)
   const {category, title,
     author,
     description,
     publication_year,
     isbn,
     printed_price,
-    selling_price, language, bookId, image} = otherData;
+    selling_price, language, bookId, image} = request.body;
     const [rows, fields] = await db.query(`SELECT * FROM sellBook WHERE isbn = '${isbn}' and userId = '${name}'`)
 
     if(rows.length === 0){
