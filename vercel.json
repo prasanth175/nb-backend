@@ -1,0 +1,104 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "app.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/register",
+        "dest": "/app.js"
+      },
+      {
+        "src": "/generate-otp",
+        "dest": "/app.js"
+      },
+      {
+        "src": "/verify-otp",
+        "dest": "/app.js"
+      },
+      {
+        "src": "/login",
+        "dest": "/app.js"
+      },
+      {
+        "src": "/uploads/(.*)",
+        "dest": "/uploads/$1"
+      },
+      {
+        "src": "/books",
+        "dest": "/app.js"
+      },
+      {
+        "src": "/books/:id",
+        "dest": "/app.js"
+      },
+      {
+        "src": "/biddetails",
+        "dest": "/app.js"
+      },
+      {
+        "src": "/book-bid-details",
+        "dest": "/app.js"
+      },
+      {
+        "src": "/products/:id",
+        "dest": "/app.js"
+      },
+      {
+        "src": "/products",
+        "dest": "/app.js"
+      },
+      {
+        "src": "/sell",
+        "dest": "/app.js"
+      },
+      {
+        "src": "/update-sell",
+        "dest": "/app.js"
+      },
+      {
+        "src": "/biddata",
+        "dest": "/app.js"
+      },
+      {
+        "src": "/cart-details",
+        "dest": "/app.js"
+      },
+      {
+        "src": "/cart-details/:id",
+        "dest": "/app.js"
+      },
+      {
+        "src": "/create-order",
+        "dest": "/app.js"
+      },
+      {
+        "src": "/payments/:id",
+        "dest": "/app.js"
+      },
+      {
+        "src": "/set-password",
+        "dest": "/app.js"
+      },
+      {
+        "src": "/change-password",
+        "dest": "/app.js"
+      },
+      {
+        "src": "/proxy/razorpay",
+        "dest": "/app.js"
+      },
+      {
+        "src": "/userDetails",
+        "dest": "/app.js"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/app.js"
+      }
+    ]
+  }
+  
