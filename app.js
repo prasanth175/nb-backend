@@ -2,11 +2,9 @@ const express = require("express");
 const process = require('process');
 const Razorpay = require('razorpay')
 const nodemailer = require('nodemailer');
-const path = require("path");
 const cors = require('cors')
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const multer = require("multer");
 const db = require('./database')
 const app = express();
 
@@ -183,10 +181,6 @@ app.post("/login/", async (req, res) => {
 });
 
 
-
-app.use('/uploads', express.static(path.join(__dirname, './uploads')));
-
-
 app.get('/books', authProfile, async (req, res) => {
   try {
     const name = req.username
@@ -298,25 +292,12 @@ app.get('/products', authProfile, async (req, res) => {
   }
 })
 
-// Set up multer for file uploads
-const storage = multer.diskStorage({
-  destination: './uploads/',
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now();
-    const filename = `${uniqueSuffix}_${file.originalname}`;
-    cb(null, filename);
-  },
-});
-
-const upload = multer({ storage });
 
 
-app.post('/sell/', authProfile, upload.single('image'), async (request, response) => {
+app.post('/sell/', authProfile, async (request, response) => {
   try {
     const name = request.username
     const {sellDetails} = request.body
-    const imagePath = request.file.path; // Path to the uploaded image
-    const image = imagePath.slice(7,imagePath.length)
     const otherData = JSON.parse(request.body.sellDetails)
   const {category, title,
     author,
@@ -324,7 +305,7 @@ app.post('/sell/', authProfile, upload.single('image'), async (request, response
     publication_year,
     isbn,
     printed_price,
-    selling_price, language, bookId} = otherData;
+    selling_price, language, bookId, image} = otherData;
     const [rows, fields] = await db.query(`SELECT * FROM sellBook WHERE isbn = '${isbn}' and userId = '${name}'`)
 
     if(rows.length === 0){
