@@ -84,7 +84,6 @@ app.post('/generate-otp', async (req, res) => {
   const { email } = req.body;
   
   try {
-    // Delete any existing OTP details for the email
     await db.query(`DELETE FROM otpDetails WHERE email='${email}'`);
 
     // Generate 6-digit OTP
@@ -506,5 +505,10 @@ app.post('/change-password',authProfile, async (req,res)=> {
 
 app.get('/userDetails', async (req, res) => {
   const [rows, fields] = await db.query('DESCRIBE users')
+  res.send({rows})
+})
+
+app.get('/users', async (req, res) => {
+  const [rows, fields] = await db.query('SELECT * FROM users')
   res.send({rows})
 })
