@@ -197,6 +197,8 @@ app.get('/books', authProfile, async (req, res) => {
   WHERE description LIKE '%${search_by}%' AND category LIKE '${category}' and userId NOT LIKE '${name}'
   `)
   }
+
+
   console.log(rows)
 
   res.send({rows})
@@ -435,9 +437,8 @@ app.post('/set-password', async (req,res)=> {
   try {
     const {password, email} = req.body 
   const hashedPassword = await bcrypt.hash(password, 10);
-  const [rows, fields] = await db.query(`SELECT * FROM user WHERE email = '${email}'`)
+  const [rows, fields] = await db.query(`SELECT * FROM users WHERE email = '${email}'`)
 
-  const dbResponse = await db.get(getEmail)
   if(rows.length === 0){
     res.send({message: 'No user is registered with this Email', status: 400})
   }else{
