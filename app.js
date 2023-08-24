@@ -443,7 +443,7 @@ app.post('/set-password', async (req,res)=> {
     res.send({message: 'No user is registered with this Email', status: 400})
   }else{
     await db.query(`
-    UPDATE user 
+    UPDATE users 
     SET password = '${hashedPassword}'
     WHERE email = '${email}'
     `)
