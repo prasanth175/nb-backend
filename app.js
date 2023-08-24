@@ -458,9 +458,10 @@ app.post('/change-password',authProfile, async (req,res)=> {
   try {
    const passDetails = req.body
    const {currentPassword, confirmPassword} = passDetails
+
    const name = req.username
    const [rows, fields] = await db.query(`SELECT password FROM users WHERE username = '${name}'`)
-   const isCorrect = await bcrypt.compare(rows[0].password, currentPassword)
+   const isCorrect = await bcrypt.compare(currentPassword, rows[0].password)
    if(isCorrect){
     const hashedPassword = await bcrypt.hash(confirmPassword, 10)
     await db.query(`
